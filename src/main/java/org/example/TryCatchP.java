@@ -9,7 +9,7 @@ public class TryCatchP extends JFrame implements ActionListener {
     JButton button;
     JLabel label;
     boolean isFail = false;
-    int y = 0;
+    int y = 200;
     TryCatchP () {
         setSize(500, 500);
         setTitle("Try Catch Practice");
@@ -39,8 +39,8 @@ public class TryCatchP extends JFrame implements ActionListener {
             try{
                 String text = textField.getText();
                 int number = Integer.parseInt(text);
+                label = new JLabel("You entered: " + textField.getText());
                 textField.setText("");
-                label = new JLabel("You entered: " + number);
                 label.setBounds(50, y , 75, 40);
                 y+=40;
                 add(label);
