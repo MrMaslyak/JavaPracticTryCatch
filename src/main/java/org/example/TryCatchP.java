@@ -41,10 +41,11 @@ public class TryCatchP extends JFrame implements ActionListener {
                 int number = Integer.parseInt(text);
                 label = new JLabel("You entered: " + textField.getText());
                 textField.setText("");
-                label.setBounds(50, y , 75, 40);
+                label.setBounds(50, y , 200, 40);
                 y+=40;
                 add(label);
-
+                revalidate();
+                repaint();
             }catch (NumberFormatException ex){
                 System.out.println("You mustn`t have a litters");
             }
