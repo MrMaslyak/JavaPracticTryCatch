@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 public class TryCatchP extends JFrame implements ActionListener {
     JTextField textField;
     JButton button;
+    JLabel label;
+    boolean isFail = false;
+    int y = 0;
     TryCatchP () {
         setSize(500, 500);
         setTitle("Try Catch Practice");
@@ -34,10 +37,16 @@ public class TryCatchP extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == button) {
             try{
+                String text = textField.getText();
+                int number = Integer.parseInt(text);
                 textField.setText("");
+                label = new JLabel("You entered: " + number);
+                label.setBounds(50, y , 75, 40);
+                y+=40;
+                add(label);
 
-            }catch (){
-
+            }catch (NumberFormatException ex){
+                System.out.println("You mustn`t have a litters");
             }
         }
     }
