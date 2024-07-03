@@ -1,6 +1,7 @@
 package org.example;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class TryCatchP extends JFrame implements ActionListener {
         textField = new JTextField();
         textField.setBounds(50, 50, 200, 30);
         textField.addActionListener(this);
+        ((AbstractDocument) textField.getDocument()).setDocumentFilter(new LengthFilter(5));
         add(textField);
 
         button = new JButton("Send");
