@@ -8,13 +8,12 @@ import java.util.List;
 
 
 public class TryCatchP extends JFrame implements ActionListener {
-    JTextField textField;
-    JButton button, arrayCheck;
-    JLabel label;
-    int y = 200;
-    List<Integer> numbers = new ArrayList<>();
-    List<Integer> limitedNumber;
-    int  maxSize = 5;
+    private JTextField textField;
+    private JButton button, arrayCheck;
+    private JLabel label = null, labelForList = null;
+    private List<Integer> numbers = new ArrayList<>();
+    private int maxSize = 5;
+
     TryCatchP() {
         setSize(500, 500);
         setTitle("Try Catch Practice");
@@ -31,7 +30,7 @@ public class TryCatchP extends JFrame implements ActionListener {
         textField.addActionListener(this);
         add(textField);
 
-        button = new JButton("Click");
+        button = new JButton("Send");
         button.setBounds(50, 100, 75, 30);
         button.addActionListener(this);
         add(button);
@@ -48,29 +47,67 @@ public class TryCatchP extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == button) {
             try {
+                if (label != null) {
+                    remove(label);
+                }
                 String text = textField.getText();
+                if (text.trim().isEmpty()) {
+                    throw new NullPointerException();
+                }
                 int number = Integer.parseInt(text);
-                label = new JLabel("Your ID: " + textField.getText());
+                label = new JLabel("Your ID: " + text);
                 textField.setText("");
-                label.setBounds(50, y, 200, 40);
-                y += 40;
+                label.setBounds(130, 100, 200, 40);
                 add(label);
                 revalidate();
                 repaint();
             } catch (NumberFormatException ex) {
-                System.out.println("You mustn`t have a litters");
+                if (label != null) {
+                    remove(label);
+                }
+
+                label = new JLabel("You mustn't have letters");
+                label.setBounds(130, 100, 200, 40);
+                add(label);
+                revalidate();
+                repaint();
+            } catch (NullPointerException ept) {
+                if (label != null) {
+                    remove(label);
+                }
+                label = new JLabel("You must enter something");
+                label.setBounds(130, 100, 200, 40);
+                add(label);
+                revalidate();
+                repaint();
             }
         }
+
         if (e.getSource() == arrayCheck) {
             try {
                 if (numbers.size() < maxSize) {
+                    if (labelForList != null) {
+                        remove(labelForList);
+                    }
                     numbers.add(numbers.size() + 1);
+                    labelForList = new JLabel("Added element. Current list: " + numbers);
+                    labelForList.setBounds(256, 150, 300, 40);
+                    add(labelForList);
+                    revalidate();
+                    repaint();
                     System.out.println("Добавлен элемент. Текущий список: " + numbers);
-                }else {
+                } else {
                     throw new IndexOutOfBoundsException();
                 }
             } catch (IndexOutOfBoundsException ex) {
-                System.out.println("Limit size in list: 5");
+                if (labelForList != null) {
+                    remove(labelForList);
+                }
+               labelForList  = new JLabel("Error: Maximum size of the list reached.");
+                labelForList.setBounds(256, 150, 300, 40);
+                add(labelForList);
+                revalidate();
+                repaint();
             }
         }
     }
