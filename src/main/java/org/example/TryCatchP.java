@@ -4,13 +4,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 
 public class TryCatchP extends JFrame implements ActionListener {
-    private JTextField textField;
-    private JButton button, arrayCheck;
-    private JLabel label = null, labelForList = null;
+    private JTextField textField, textFieldForEmail;
+    private JButton button, arrayCheck, validEmail;
+    private JLabel label = null, labelForList = null, labelForEmail = null;
     private List<Integer> numbers = new ArrayList<>();
     private int maxSize = 5;
 
@@ -40,6 +41,16 @@ public class TryCatchP extends JFrame implements ActionListener {
         arrayCheck.addActionListener(this);
         add(arrayCheck);
         List<Integer> numbers = new ArrayList<>();
+
+        textFieldForEmail  = new JTextField();
+        textFieldForEmail.setBounds(50, 200, 200, 30);
+        textFieldForEmail.addActionListener(this);
+        add(textFieldForEmail);
+
+        validEmail = new JButton("Validate Email");
+        validEmail.setBounds(50, 250, 200, 30);
+        validEmail.addActionListener(this);
+        add(validEmail);
 
     }
 
@@ -95,7 +106,6 @@ public class TryCatchP extends JFrame implements ActionListener {
                     add(labelForList);
                     revalidate();
                     repaint();
-                    System.out.println("Добавлен элемент. Текущий список: " + numbers);
                 } else {
                     throw new IndexOutOfBoundsException();
                 }
@@ -110,5 +120,32 @@ public class TryCatchP extends JFrame implements ActionListener {
                 repaint();
             }
         }
+        if ( e.getSource() == validEmail) {
+            try{
+                if (labelForEmail != null) {
+                    remove(labelForEmail);
+                }
+                String email = textFieldForEmail.getText();
+                 if (email.contains("@")) {
+                     labelForEmail = new JLabel("Email is valid.");
+                     labelForEmail.setBounds(256, 200, 300, 40);
+                     add(labelForEmail);
+                 } else {
+                     throw new IllegalArgumentException();
+                 }
+
+            }catch (IllegalArgumentException ex){
+                if (labelForEmail != null) {
+                    remove(labelForEmail);
+                }
+                labelForEmail = new JLabel("Email is not valid.");
+                labelForEmail.setBounds(256, 200, 300, 40);
+                add(labelForEmail);
+            }finally {
+                revalidate();
+                repaint();
+            }
+        }
+
     }
 }
